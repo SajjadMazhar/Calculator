@@ -1,7 +1,13 @@
-
 let screen = document.getElementById("screen");
 let allButtons = document.querySelectorAll("button");
 let screenOutput = "";
+
+function factorial(n) {
+    if (n == 0) {
+        return 1;
+    }
+    return n * factorial(n - 1);
+}
 
 for (button of allButtons) {
     button.addEventListener("click", function (element) {
@@ -74,29 +80,43 @@ for (button of allButtons) {
             screen.value = screenOutput;
         }
 
-        else if (buttonText == '=') {
-
-
-            try {
-                screen.value = '=' + eval(screenOutput);
-                screenOutput = screen.value.substring(1);    
-            }
-            catch (err) {
-                screenOutput = err;
-                screen.value = screenOutput;
-                screenOutput = "";
-            }
-        }
         else if (buttonText == 'del') {
             screenOutput = screenOutput.slice(0, -1);
             screen.value = screenOutput;
         }
 
+        else if (buttonText == 'n!') {
+            buttonText = '!';
+            screenOutput += buttonText;
+            screen.value = screenOutput;
+        }
+
+        else if (buttonText == '=') {
+            if (screen.value.includes("!")) {
+                let n = screen.value.slice(0, -1);
+                screenOutput = factorial(n);
+                screen.value = '=' + screenOutput;
+                screenOutput = screen.value.substring(1);
+            }
+            else {
+
+                try {
+                    screen.value = '=' + eval(screenOutput);
+                    screenOutput = screen.value.substring(1);
+                }
+                catch (err) {
+                    screenOutput = err;
+                    screen.value = screenOutput;
+                    screenOutput = "";
+                }
+            }
+        }
+
         else {
             screenOutput += buttonText;
             screen.value = screenOutput;
-            
+
         }
     })
-    
+
 }
