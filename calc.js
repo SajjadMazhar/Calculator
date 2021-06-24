@@ -1,6 +1,7 @@
 let screen = document.getElementById("screen");
 let allButtons = document.querySelectorAll("button");
 let screenOutput = "";
+let deg = `&{Math.PI /180}`;
 
 function factorial(n) {
     if (n == 0) {
@@ -18,7 +19,7 @@ for (button of allButtons) {
             screenOutput += buttonText;
             screen.value = screenOutput;
         }
-        else if (buttonText == 'C') {
+        else if (buttonText == 'AC') {
             screenOutput = "";
             screen.value = screenOutput;
         }
@@ -30,19 +31,19 @@ for (button of allButtons) {
 
         else if (buttonText == 'sin') {
 
-            buttonText = "Math.sin(";
+            buttonText = "Math.sin(Math.PI/180*";
             screenOutput += buttonText;
             screen.value = screenOutput;
         }
 
         else if (buttonText == 'cos') {
-            buttonText = "Math.cos(";
+            buttonText = "Math.cos(Math.PI/180*";
             screenOutput += buttonText;
             screen.value = screenOutput;
         }
 
         else if (buttonText == 'tan') {
-            buttonText = "Math.tan(";
+            buttonText = "Math.tan(Math.PI/180*";
             screenOutput += buttonText;
             screen.value = screenOutput;
         }
@@ -91,6 +92,13 @@ for (button of allButtons) {
             screen.value = screenOutput;
         }
 
+        else if (buttonText == 'nCr'){
+            buttonText = 'C';
+            screenOutput += buttonText;
+            screen.value = screenOutput;
+        }
+
+
         else if (buttonText == '=') {
             if (screen.value.includes("!")) {
                 let n = screen.value.slice(0, -1);
@@ -98,6 +106,29 @@ for (button of allButtons) {
                 screen.value = '=' + screenOutput;
                 screenOutput = screen.value.substring(1);
             }
+
+            else if (screen.value.includes("C")){
+                let ncr = screen.value;
+                let n='';
+                let r;
+                for (let index in ncr){
+                    if (ncr[index] != 'C'){
+                        n += ncr[index];
+                    }
+                    else if(ncr[index]=='C'){
+                        r = ncr.slice(index).slice(1);
+                        break
+
+                    }
+                }
+                
+                screenOutput = factorial(n)/(factorial(r) * factorial(n-r));
+                screen.value = '=' + screenOutput;
+                screenOutput = screen.value.substring(1);
+
+
+            }
+
             else {
 
                 try {
